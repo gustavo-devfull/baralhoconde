@@ -1,0 +1,1 @@
+export { OApelido } from './OApelido'

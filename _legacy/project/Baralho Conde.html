@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baralho Conde — A Carta Que Foge Às Regras</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:    #1b2446;
+      --navy-dk: #141c38;
+      --navy-lt: #223060;
+      --gold:    #c4912a;
+      --gold-lt: #dba94a;
+      --cream:   #f0ece3;
+      --text:    #e2ddd4;
+      --dim:     rgba(226,221,212,0.52);
+      --H:       'Cinzel', serif;
+      --D:       'Cinzel Decorative', serif;
+      --B:       'Crimson Pro', Georgia, serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--navy);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='none' stroke='rgba(255%2C255%2C255%2C0.032)' stroke-width='0.7'%3E%3Cpath d='M40 6 L74 40 L40 74 L6 40 Z'/%3E%3Ccircle cx='40' cy='40' r='7'/%3E%3C/g%3E%3C/svg%3E");
+      color: var(--text);
+      font-family: var(--B);
+      overflow-x: hidden;
+    }
+
+    /* SCROLL REVEAL */
+    .rv { opacity: 0; transform: translateY(32px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .rv.in { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: 0.15s; } .d2 { transition-delay: 0.3s; }
+    .d3 { transition-delay: 0.45s; } .d4 { transition-delay: 0.62s; }
+
+    /* LAYOUT */
+    .wrap   { max-width: 1200px; margin: 0 auto; padding: 0 52px; }
+    .wrap-m { max-width: 860px;  margin: 0 auto; padding: 0 52px; }
+    .wrap-s { max-width: 660px;  margin: 0 auto; padding: 0 52px; }
+
+    /* REUSABLE */
+    .tag {
+      font-family: var(--H); font-size: 10px; letter-spacing: 5px;
+      text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 22px;
+    }
+    .rule { width: 48px; height: 1px; background: var(--gold); }
+    .rule.c { margin: 32px auto; }
+    .rule.l { margin: 28px 0; }
+
+    /* ── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 200;
+      padding: 22px 52px; display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.5s, border-color 0.5s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.s {
+      background: rgba(20,28,56,0.92);
+      backdrop-filter: blur(18px);
+      border-bottom-color: rgba(196,145,42,0.18);
+    }
+    .nb { font-family: var(--D); font-size: 15px; color: var(--gold); letter-spacing: 4px; }
+    .nl { display: flex; gap: 36px; }
+    .nl a {
+      font-family: var(--H); font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--dim); text-decoration: none; transition: color 0.3s;
+    }
+    .nl a:hover { color: var(--gold); }
+    .nc {
+      font-family: var(--H); font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      background: transparent; border: 1px solid var(--gold); color: var(--gold);
+      padding: 9px 22px; cursor: pointer; transition: all 0.3s;
+    }
+    .nc:hover { background: var(--gold); color: var(--navy-dk); }
+
+    /* ── HERO ─────────────────────────────────────── */
+    .hero {
+      position: relative; height: 100vh; min-height: 620px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 70% at 50% 60%, transparent 0%, rgba(14,18,38,0.72) 100%);
+      pointer-events: none;
+    }
+    .hero-c { position: relative; z-index: 2; text-align: center; }
+    .hero-pre {
+      font-family: var(--H); font-size: 10px; letter-spacing: 8px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 36px;
+      animation: fu 1s ease 0.4s both;
+    }
+    .hero-h {
+      font-family: var(--D); font-size: clamp(68px,12vw,148px); font-weight: 700;
+      color: var(--cream); line-height: 1; letter-spacing: 4px;
+      animation: fu 1s ease 0.7s both;
+    }
+    .hero-vr {
+      width: 1px; height: 64px; background: linear-gradient(to bottom, var(--gold), transparent);
+      margin: 30px auto; animation: fu 1s ease 1s both;
+    }
+    .hero-sub {
+      font-family: var(--H); font-size: clamp(12px,1.4vw,16px); letter-spacing: 4px;
+      text-transform: uppercase; color: var(--dim);
+      animation: fu 1s ease 1.2s both;
+    }
+    .hero-dn {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      animation: fu 1.2s ease 1.8s both;
+    }
+    .hero-dn-bar {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    .hero-dn-t { font-family: var(--H); font-size: 8px; letter-spacing: 4px; text-transform: uppercase; color: var(--dim); }
+
+    @keyframes fu { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scaleY(1);} 50%{opacity:0.3;transform:scaleY(0.65);} }
+
+    /* ── SECTION A MESA ──────────────────────────── */
+    .s-mesa { padding: 140px 0; }
+    .mesa-grid { display: grid; grid-template-columns: 380px 1fr; gap: 88px; align-items: center; }
+
+    /* Playing-card frame placeholder */
+    .card-frame {
+      position: relative; width: 100%; aspect-ratio: 2/3;
+      background: var(--navy-dk); border: 1px solid rgba(196,145,42,0.32);
+      display: flex; flex-direction: column;
+    }
+    .card-frame::before {
+      content: ''; position: absolute; inset: 10px;
+      border: 1px solid rgba(196,145,42,0.12); pointer-events: none; z-index: 0;
+    }
+    .cf-corner {
+      position: absolute; font-family: var(--H); font-size: 12px;
+      color: var(--gold); opacity: 0.7; line-height: 1.3; z-index: 1;
+    }
+    .cf-corner.tl { top: 16px; left: 18px; }
+    .cf-corner.br { bottom: 16px; right: 18px; transform: rotate(180deg); }
+    .cf-body {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; position: relative; z-index: 1;
+    }
+    .cf-suit { font-size: 88px; color: var(--gold); opacity: 0.07; line-height: 1; }
+    .cf-label {
+      font-family: var(--H); font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); opacity: 0.35; margin-top: 12px; text-align: center; padding: 0 16px;
+    }
+    .cf-foot {
+      padding: 16px 20px; border-top: 1px solid rgba(196,145,42,0.14);
+      text-align: center; position: relative; z-index: 1;
+    }
+    .cf-foot span { font-family: var(--D); font-size: 12px; color: var(--gold); letter-spacing: 3px; }
+
+    .mesa-text h2 {
+      font-family: var(--H); font-size: clamp(22px,2.8vw,34px); color: var(--cream);
+      text-transform: uppercase; letter-spacing: 1.5px; line-height: 1.35; margin-bottom: 28px;
+    }
+    .mesa-text p {
+      font-size: clamp(17px,1.4vw,20px); line-height: 1.95; color: var(--text);
+      margin-bottom: 20px; font-weight: 300;
+    }
+
+    /* ── SECTION O CORINGA ───────────────────────── */
+    .s-coringa {
+      padding: 160px 0;
+      background: var(--navy-dk);
+      border-top: 1px solid rgba(196,145,42,0.08);
+      border-bottom: 1px solid rgba(196,145,42,0.08);
+    }
+    .coringa-lines { text-align: center; }
+    .cl {
+      display: block; font-family: var(--H); font-size: clamp(18px,2.8vw,34px);
+      letter-spacing: 5px; text-transform: uppercase; color: var(--dim);
+      margin-bottom: 18px;
+    }
+    .cg { display: block; height: 52px; }
+    .crev {
+      display: block; font-family: var(--D); font-size: clamp(54px,8.5vw,108px);
+      font-weight: 700; color: var(--gold); letter-spacing: 6px;
+      text-transform: uppercase;
+    }
+    .coringa-body {
+      margin-top: 52px; text-align: center;
+      font-size: clamp(17px,1.5vw,20px); line-height: 1.9; color: var(--text);
+      font-weight: 300; font-family: var(--B); font-style: italic;
+    }
+
+    /* ── SECTION O APELIDO ───────────────────────── */
+    .s-apelido { padding: 140px 0; }
+    .apelido-c { text-align: center; max-width: 700px; margin: 0 auto; }
+    .apelido-c p {
+      font-size: clamp(17px,1.5vw,20px); line-height: 1.95; color: var(--text);
+      font-weight: 300; margin-bottom: 18px;
+    }
+    .apelido-big {
+      font-family: var(--D); font-size: clamp(58px,9vw,114px); font-weight: 700;
+      color: var(--gold); display: block; line-height: 1.05; margin: 52px 0 44px;
+      letter-spacing: 2px;
+    }
+    .apelido-note {
+      font-family: var(--H); font-size: 11px; letter-spacing: 5px;
+      text-transform: uppercase; color: var(--dim);
+    }
+
+    /* ── SECTION O NOBRE ─────────────────────────── */
+    .s-nobre { padding: 140px 0; background: var(--navy-dk); }
+    .nobre-q {
+      font-family: var(--H); font-size: clamp(18px,2.4vw,28px);
+      color: var(--cream); line-height: 1.6; text-align: center;
+      max-width: 760px; margin: 0 auto 80px; font-weight: 400; letter-spacing: 0.5px;
+    }
+    .nobre-q em { color: var(--gold); font-style: italic; }
+    .traits { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; }
+    .trait {
+      padding: 44px 28px 40px; background: var(--navy);
+      border: 1px solid rgba(196,145,42,0.1); transition: border-color 0.4s;
+    }
+    .trait:hover { border-color: rgba(196,145,42,0.38); }
+    .trait-suit { font-size: 26px; color: var(--gold); opacity: 0.45; margin-bottom: 20px; display: block; }
+    .trait h3 {
+      font-family: var(--H); font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 14px;
+    }
+    .trait p { font-size: 15px; line-height: 1.85; color: var(--dim); font-weight: 300; }
+
+    /* ── SECTION MANIFESTO ───────────────────────── */
+    .s-manifesto { padding: 140px 0; }
+    .mf-c { text-align: center; max-width: 660px; margin: 0 auto; }
+    .mf-c h2 {
+      font-family: var(--H); font-size: clamp(22px,2.8vw,34px); color: var(--cream);
+      text-transform: uppercase; letter-spacing: 2px; line-height: 1.45; margin-bottom: 28px;
+    }
+    .mf-c p {
+      font-size: clamp(17px,1.5vw,20px); line-height: 1.95; color: var(--text);
+      font-weight: 300; margin-bottom: 18px;
+    }
+    .mf-c strong { color: var(--cream); font-weight: 600; }
+
+    /* ── SECTION FINAL ───────────────────────────── */
+    .s-final {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 120px 52px;
+      background: var(--navy-dk);
+      border-top: 1px solid rgba(196,145,42,0.12);
+      text-align: center;
+    }
+    .f-orn { font-size: 20px; color: var(--gold); opacity: 0.3; letter-spacing: 20px; margin-bottom: 56px; }
+    .f-h {
+      font-family: var(--H); font-size: clamp(26px,4.5vw,58px); color: var(--cream);
+      text-transform: uppercase; letter-spacing: 3px; line-height: 1.3; max-width: 820px;
+      margin-bottom: 14px;
+    }
+    .f-h em { color: var(--gold); font-style: italic; }
+    .f-sub {
+      font-family: var(--H); font-size: 10px; letter-spacing: 6px;
+      text-transform: uppercase; color: var(--dim); margin: 32px 0 52px;
+    }
+    .f-btns { display: flex; gap: 18px; align-items: center; justify-content: center; }
+    .btn-p {
+      font-family: var(--H); font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      background: var(--gold); color: var(--navy-dk); padding: 16px 40px;
+      border: 1px solid var(--gold); cursor: pointer; transition: all 0.3s;
+    }
+    .btn-p:hover { background: var(--gold-lt); border-color: var(--gold-lt); }
+    .btn-s {
+      font-family: var(--H); font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      background: transparent; color: var(--dim); padding: 16px 40px;
+      border: 1px solid rgba(226,221,212,0.22); cursor: pointer; transition: all 0.3s;
+    }
+    .btn-s:hover { color: var(--cream); border-color: rgba(226,221,212,0.6); }
+
+    /* FOOTER */
+    footer {
+      padding: 28px 52px; background: var(--navy-dk);
+      border-top: 1px solid rgba(196,145,42,0.1);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .ft-logo { font-family: var(--D); font-size: 13px; color: var(--gold); letter-spacing: 5px; }
+    .ft-s { font-size: 13px; color: var(--gold); opacity: 0.22; letter-spacing: 12px; }
+    .ft-c { font-family: var(--H); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "accentColor": "#c4912a",
+      "bgColor": "#1b2446",
+      "bodySize": 19
+    }/*EDITMODE-END*/;
+
+    function useReveal() {
+      useEffect(() => {
+        const io = new IntersectionObserver(
+          es => es.forEach(e => e.isIntersecting && e.target.classList.add('in')),
+          { threshold: 0.1 }
+        );
+        document.querySelectorAll('.rv').forEach(el => io.observe(el));
+        return () => io.disconnect();
+      }, []);
+    }
+
+    // ── NAV ────────────────────────────────────────
+    function Nav() {
+      const [sc, setSc] = useState(false);
+      useEffect(() => {
+        const h = () => setSc(window.scrollY > 70);
+        window.addEventListener('scroll', h, { passive: true });
+        return () => window.removeEventListener('scroll', h);
+      }, []);
+      return (
+        <nav className={sc ? 's' : ''}>
+          <span className="nb">Conde</span>
+          <div className="nl">
+            <a href="#">A Mesa</a>
+            <a href="#">O Coringa</a>
+            <a href="#">O Baralho</a>
+          </div>
+          <button className="nc">Comprar</button>
+        </nav>
+      );
+    }
+
+    // ── HERO ───────────────────────────────────────
+    function Hero() {
+      return (
+        <section className="hero">
+          <div className="hero-c">
+            <p className="hero-pre">Baralho Conde · Memória Ítalo-Brasileira</p>
+            <h1 className="hero-h">O Conde</h1>
+            <div className="hero-vr"></div>
+            <p className="hero-sub">A carta que foge às regras</p>
+          </div>
+          <div className="hero-dn">
+            <div className="hero-dn-bar"></div>
+            <span className="hero-dn-t">Descubra</span>
+          </div>
+        </section>
+      );
+    }
+
+    // ── A MESA ─────────────────────────────────────
+    function AMesa() {
+      return (
+        <section className="s-mesa">
+          <div className="wrap">
+            <div className="mesa-grid">
+              <div className="rv">
+                <div className="card-frame">
+                  <div className="cf-corner tl">C<br />♣</div>
+                  <div className="cf-corner br">C<br />♣</div>
+                  <div className="cf-body">
+                    <div className="cf-suit">♣</div>
+                    <p className="cf-label">Solte aqui a ilustração<br />do Conde</p>
+                  </div>
+                  <div className="cf-foot"><span>O Conde</span></div>
+                </div>
+              </div>
+              <div>
+                <span className="tag rv">I · A Mesa</span>
+                <div className="mesa-text">
+                  <h2 className="rv d1">Dizem que toda mesa de cartas<br />guarda uma história.</h2>
+                  <p className="rv d2">
+                    Entre copos de vinho, fumaça de cigarros e noites longas nas colônias 
+                    italianas do interior do Brasil, existia sempre uma carta diferente das outras.
+                  </p>
+                  <p className="rv d3">
+                    Ninguém a comandava. Ninguém a temia.<br />
+                    Ela apenas aparecia — e mudava tudo.
+                  </p>
+                  <div className="rule l rv d4"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ── O CORINGA ──────────────────────────────────
+    function OCoringa() {
+      return (
+        <section className="s-coringa">
+          <div className="wrap-s">
+            <span className="tag rv" style={{textAlign:'center'}}>II · O Coringa</span>
+            <div className="coringa-lines">
+              <span className="cl rv">Uma carta sem reino.</span>
+              <span className="cl rv d1">Sem exército.</span>
+              <span className="cl rv d2">Sem regras.</span>
+              <span className="cg"></span>
+              <span className="crev rv d3">O Coringa.</span>
+            </div>
+            <div className="rule c rv d4"></div>
+            <p className="coringa-body rv d4">
+              Enquanto reis comandavam, damas influenciavam e valetes serviam,<br />
+              ele atravessava o jogo livremente — mudando destinos sem pedir permissão.
+            </p>
+          </div>
+        </section>
+      );
+    }
+
+    // ── O APELIDO ──────────────────────────────────
+    function OApelido() {
+      return (
+        <section className="s-apelido">
+          <div className="apelido-c">
+            <span className="tag rv" style={{textAlign:'center'}}>III · O Apelido</span>
+            <p className="rv d1">
+              Entre famílias de imigrantes ítalo-brasileiros, essa carta ganhou um apelido curioso.
+            </p>
+            <p className="rv d2">
+              Ninguém sabe exatamente quando começou. Talvez em uma mesa de madeira gasta. 
+              Talvez em um jogo interrompido por uma jogada improvável. Talvez apenas 
+              como uma brincadeira que atravessou gerações.
+            </p>
+            <span className="apelido-big rv d2">O Conde.</span>
+            <p className="rv d3">Mas o nome permaneceu.</p>
+            <div className="rule c rv d3"></div>
+            <p className="apelido-note rv d4">Tradição oral · Colônias Ítalo-Brasileiras · Séc. XIX</p>
+          </div>
+        </section>
+      );
+    }
+
+    // ── O NOBRE ────────────────────────────────────
+    function ONobre() {
+      const ts = [
+        { s:'♠', t:'A Astúcia',    b:'Não vence pela força bruta. Sempre pela leitura certa do momento e pelo silêncio calculado.' },
+        { s:'♥', t:'A Virada',     b:'A partida pode mudar em um instante. O Conde é esse instante — inesperado e inevitável.' },
+        { s:'♦', t:'A Elegância',  b:'Aristocrático na postura. Imprevisível na ação. Caminha entre reis sem nunca se tornar banal.' },
+        { s:'♣', t:'A Liberdade',  b:'Não pertence à corte. Circula acima dela. Jamais aceita um destino fixo.' },
+      ];
+      return (
+        <section className="s-nobre">
+          <div className="wrap">
+            <span className="tag rv" style={{textAlign:'center',display:'block',marginBottom:48}}>IV · O Nobre Excêntrico</span>
+            <blockquote className="nobre-q rv d1">
+              "Como um nobre excêntrico caminhando entre reis<br />
+              sem jamais <em>se curvar a eles.</em>"
+            </blockquote>
+            <div className="traits">
+              {ts.map((t,i) => (
+                <div key={i} className={`trait rv d${i+1}`}>
+                  <span className="trait-suit">{t.s}</span>
+                  <h3>{t.t}</h3>
+                  <p>{t.b}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ── MANIFESTO ──────────────────────────────────
+    function Manifesto() {
+      return (
+        <section className="s-manifesto">
+          <div className="mf-c">
+            <span className="tag rv" style={{textAlign:'center'}}>V · O Baralho</span>
+            <h2 className="rv d1">Uma memória oral<br />transformada em símbolo.</h2>
+            <div className="rule c rv d2"></div>
+            <p className="rv d2">
+              O Baralho Conde nasce dessa <strong>memória oral ítalo-brasileira</strong> e 
+              transforma tradição em símbolo. Mais do que um jogo, ele carrega a ideia 
+              de que uma única carta pode mudar tudo.
+            </p>
+            <p className="rv d3">
+              Porque às vezes a partida não é vencida pela força. Nem pela autoridade. 
+              Mas pela habilidade de <strong>surpreender no momento exato.</strong>
+            </p>
+            <p className="rv d4" style={{fontStyle:'italic',color:'var(--dim)'}}>
+              E quando isso acontece — o Conde entra em cena.
+            </p>
+          </div>
+        </section>
+      );
+    }
+
+    // ── FINAL ──────────────────────────────────────
+    function Final() {
+      return (
+        <section className="s-final">
+          <p className="f-orn rv">♠ ♥ ♦ ♣</p>
+          <h2 className="f-h rv d1">
+            Que o Conde esteja<br />sempre a <em>seu favor.</em>
+          </h2>
+          <p className="f-sub rv d2">Baralho Conde · Memória Ítalo-Brasileira</p>
+          <div className="f-btns rv d3">
+            <button className="btn-p">Conheça o Baralho</button>
+            <button className="btn-s">Nossa História</button>
+          </div>
+        </section>
+      );
+    }
+
+    // ── APP ────────────────────────────────────────
+    function App() {
+      const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+      useReveal();
+
+      useEffect(() => {
+        document.documentElement.style.setProperty('--gold', t.accentColor);
+        document.documentElement.style.setProperty('--navy', t.bgColor);
+      }, [t.accentColor, t.bgColor]);
+
+      return (
+        <div>
+          <Nav />
+          <Hero />
+          <AMesa />
+          <OCoringa />
+          <OApelido />
+          <ONobre />
+          <Manifesto />
+          <Final />
+          <footer>
+            <span className="ft-logo">Conde</span>
+            <span className="ft-s">♠ ♥ ♦ ♣</span>
+            <span className="ft-c">© Baralho Conde · Todos os direitos reservados</span>
+          </footer>
+
+          <TweaksPanel>
+            <TweakSection title="Cores">
+              <TweakColor label="Dourado" value={t.accentColor}
+                options={['#c4912a','#b8891f','#d4a840','#9f7820']}
+                onChange={v => setTweak('accentColor', v)} />
+              <TweakColor label="Fundo Navy" value={t.bgColor}
+                options={['#1b2446','#141c38','#1a1e3a','#0f1625']}
+                onChange={v => setTweak('bgColor', v)} />
+            </TweakSection>
+            <TweakSection title="Tipografia">
+              <TweakSlider label="Corpo (px)" value={t.bodySize} min={15} max={24} step={1}
+                onChange={v => { setTweak('bodySize', v); document.documentElement.style.setProperty('font-size', v + 'px'); }} />
+            </TweakSection>
+          </TweaksPanel>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

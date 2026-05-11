@@ -1,0 +1,83 @@
+/* ── SECTION O NOBRE ─────────────────────────── */
+.s-nobre {
+  padding: 140px 0;
+  background: var(--navy-dk);
+}
+
+.nobre-q {
+  font-family: var(--H);
+  font-size: clamp(18px, 2.4vw, 28px);
+  color: var(--cream);
+  line-height: 1.6;
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 80px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.nobre-q em {
+  color: var(--gold);
+  font-style: italic;
+}
+
+.traits {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+
+.trait {
+  padding: 44px 28px 40px;
+  background: var(--navy);
+  border: 1px solid rgba(196, 145, 42, 0.1);
+  transition: border-color var(--transition-normal);
+}
+
+.trait:hover {
+  border-color: rgba(196, 145, 42, 0.38);
+}
+
+.trait-suit {
+  font-size: 26px;
+  color: var(--gold);
+  opacity: 0.45;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.trait h3 {
+  font-family: var(--H);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.trait p {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--dim);
+  font-weight: 300;
+}
+
+@media (max-width: 1024px) {
+  .traits {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .s-nobre {
+    padding: 100px 0;
+  }
+
+  .traits {
+    grid-template-columns: 1fr;
+  }
+
+  .nobre-q {
+    margin: 0 auto 48px;
+  }
+}

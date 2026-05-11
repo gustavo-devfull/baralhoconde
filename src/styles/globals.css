@@ -1,0 +1,61 @@
+@import './tokens.css';
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--navy);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='none' stroke='rgba(255%2C255%2C255%2C0.032)' stroke-width='0.7'%3E%3Cpath d='M40 6 L74 40 L40 74 L6 40 Z'/%3E%3Ccircle cx='40' cy='40' r='7'/%3E%3C/g%3E%3C/svg%3E");
+  color: var(--text);
+  font-family: var(--B);
+  overflow-x: hidden;
+}
+
+/* ── SCROLL REVEAL ─────────────────────────── */
+.rv {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.rv.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.d1 { transition-delay: 0.15s; }
+.d2 { transition-delay: 0.3s; }
+.d3 { transition-delay: 0.45s; }
+.d4 { transition-delay: 0.62s; }
+
+/* ── LAYOUT ────────────────────────────────── */
+.wrap   { max-width: 1200px; margin: 0 auto; padding: 0 52px; }
+.wrap-m { max-width: 860px;  margin: 0 auto; padding: 0 52px; }
+.wrap-s { max-width: 660px;  margin: 0 auto; padding: 0 52px; }
+
+/* ── REUSABLE ──────────────────────────────── */
+.tag {
+  font-family: var(--H);
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 22px;
+}
+
+.rule {
+  width: 48px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.rule.c { margin: 32px auto; }
+.rule.l { margin: 28px 0; }

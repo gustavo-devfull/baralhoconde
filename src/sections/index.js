@@ -1,0 +1,7 @@
+export { Hero } from './Hero'
+export { AMesa } from './AMesa'
+export { OCoringa } from './OCoringa'
+export { OApelido } from './OApelido'
+export { ONobre } from './ONobre'
+export { Manifesto } from './Manifesto'
+export { Final } from './Final'

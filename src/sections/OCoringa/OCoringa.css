@@ -1,0 +1,61 @@
+/* ── SECTION O CORINGA ───────────────────────── */
+.s-coringa {
+  padding: 160px 0;
+  background: var(--navy-dk);
+  border-top: 1px solid rgba(196, 145, 42, 0.08);
+  border-bottom: 1px solid rgba(196, 145, 42, 0.08);
+}
+
+.coringa-lines {
+  text-align: center;
+}
+
+.cl {
+  display: block;
+  font-family: var(--H);
+  font-size: clamp(18px, 2.8vw, 34px);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 18px;
+}
+
+.cg {
+  display: block;
+  height: 52px;
+}
+
+.crev {
+  display: block;
+  font-family: var(--D);
+  font-size: clamp(54px, 8.5vw, 108px);
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+
+.coringa-body {
+  margin-top: 52px;
+  text-align: center;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.9;
+  color: var(--text);
+  font-weight: 300;
+  font-family: var(--B);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .s-coringa {
+    padding: 100px 0;
+  }
+
+  .cg {
+    height: 32px;
+  }
+
+  .coringa-body {
+    margin-top: 32px;
+  }
+}

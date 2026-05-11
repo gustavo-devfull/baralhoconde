@@ -1,0 +1,35 @@
+:root {
+  /* ── COLORS ────────────────────────────────── */
+  --navy:    #1b2446;
+  --navy-dk: #141c38;
+  --navy-lt: #223060;
+  --gold:    #c4912a;
+  --gold-lt: #dba94a;
+  --cream:   #f0ece3;
+  --text:    #e2ddd4;
+  --dim:     rgba(226,221,212,0.52);
+
+  /* ── FONTS ─────────────────────────────────── */
+  --H:       'Cinzel', serif;
+  --D:       'Cinzel Decorative', serif;
+  --B:       'Crimson Pro', Georgia, serif;
+
+  /* ── SPACING ───────────────────────────────── */
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+
+  /* ── SIZES ─────────────────────────────────── */
+  --max-width: 1200px;
+  --max-width-m: 860px;
+  --max-width-s: 660px;
+
+  /* ── TRANSITIONS ───────────────────────────── */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
