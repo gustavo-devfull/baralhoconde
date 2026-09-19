@@ -1,0 +1,4 @@
+body { margin: 0; background: #fdfcf8; }
+*, *::before, *::after { box-sizing: border-box; }
+a { color: #b8873c; text-decoration: none; }
+a:hover { color: #d9a95c; }
