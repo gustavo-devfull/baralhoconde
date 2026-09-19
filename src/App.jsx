@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { TweaksProvider, TweaksContext } from '@contexts/TweaksContext'
-import { Nav, Footer, TweaksPanel } from '@components'
+import { Nav, Footer } from '@components'
 import { Hero, AMesa, OCoringa, OApelido, ONobre, Manifesto, Final } from '@sections'
 import { useReveal } from '@hooks/useReveal'
 import { useScrollTrigger } from '@hooks/useScrollTrigger'
@@ -40,7 +40,6 @@ function AppContent() {
       <Manifesto />
       <Final />
       <Footer />
-      <TweaksPanel />
     </>
   )
 }

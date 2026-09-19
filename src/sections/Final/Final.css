@@ -5,10 +5,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 120px 52px;
-  background: var(--navy-dk);
+  padding: 120px 52px 0 52px;
+  margin-top: -160px;
+  background: linear-gradient(to bottom, var(--navy-dk), var(--navy));
   border-top: 1px solid rgba(196, 145, 42, 0.12);
   text-align: center;
+  position: relative;
+  z-index: 15;
 }
 
 .f-orn {
@@ -21,7 +24,7 @@
 
 .f-h {
   font-family: var(--H);
-  font-size: clamp(26px, 4.5vw, 58px);
+  font-size: clamp(28px, 4.5vw, 60px);
   color: var(--cream);
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -37,7 +40,7 @@
 
 .f-sub {
   font-family: var(--H);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 6px;
   text-transform: uppercase;
   color: var(--dim);
@@ -53,7 +56,7 @@
 
 .btn-p {
   font-family: var(--H);
-  font-size: 10px;
+  font-size: 16px;
   letter-spacing: 4px;
   text-transform: uppercase;
   background: var(--gold);
@@ -73,7 +76,7 @@
 
 .btn-s {
   font-family: var(--H);
-  font-size: 10px;
+  font-size: 16px;
   letter-spacing: 4px;
   text-transform: uppercase;
   background: transparent;

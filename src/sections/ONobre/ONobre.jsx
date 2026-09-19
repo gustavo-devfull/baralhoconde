@@ -1,4 +1,9 @@
+import { useEffect } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './ONobre.css'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const TRAITS = [
   { s: '♠', t: 'A Astúcia', b: 'Não vence pela força bruta. Sempre pela leitura certa do momento e pelo silêncio calculado.' },
@@ -8,6 +13,27 @@ const TRAITS = [
 ]
 
 export function ONobre() {
+  useEffect(() => {
+    const section = document.querySelector('.s-nobre')
+
+    gsap.fromTo(
+      section,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 100%',
+          end: 'top 30%',
+          scrub: 1,
+        },
+      }
+    )
+
+    return () => ScrollTrigger.getAll().forEach(t => t.kill())
+  }, [])
+
   return (
     <section className="s-nobre" id="o-nobre">
       <div className="wrap">

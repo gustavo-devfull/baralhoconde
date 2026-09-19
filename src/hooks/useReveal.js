@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-export function useReveal(selector = '.rv', threshold = 0.1) {
+export function useReveal(selector = '.rv', threshold = 0.3) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {

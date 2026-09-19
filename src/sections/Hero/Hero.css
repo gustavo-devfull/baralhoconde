@@ -8,6 +8,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding-bottom: 80px;
 }
 
 .hero::after {
@@ -30,7 +31,7 @@
 
 .hero-pre {
   font-family: var(--H);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 8px;
   text-transform: uppercase;
   color: var(--gold);
@@ -39,7 +40,7 @@
 
 .hero-h {
   font-family: var(--D);
-  font-size: clamp(68px, 12vw, 148px);
+  font-size: clamp(70px, 12vw, 150px);
   font-weight: 700;
   color: var(--cream);
   line-height: 1;
@@ -55,7 +56,7 @@
 
 .hero-sub {
   font-family: var(--H);
-  font-size: clamp(12px, 1.4vw, 16px);
+  font-size: clamp(14px, 1.4vw, 18px);
   letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--dim);
@@ -81,7 +82,7 @@
 
 .hero-dn-t {
   font-family: var(--H);
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--dim);
@@ -93,7 +94,7 @@
   }
 
   .hero-pre {
-    font-size: 8px;
+    font-size: 10px;
     margin-bottom: 24px;
   }
 

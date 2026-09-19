@@ -1,6 +1,31 @@
+import { useEffect } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './Final.css'
 
+gsap.registerPlugin(ScrollTrigger)
+
 export function Final() {
+  useEffect(() => {
+    const section = document.querySelector('.s-final')
+
+    gsap.fromTo(
+      section,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 100%',
+          end: 'top 30%',
+          scrub: 1,
+        },
+      }
+    )
+
+    return () => ScrollTrigger.getAll().forEach(t => t.kill())
+  }, [])
   return (
     <section className="s-final" id="final">
       <p className="f-orn rv">♠ ♥ ♦ ♣</p>

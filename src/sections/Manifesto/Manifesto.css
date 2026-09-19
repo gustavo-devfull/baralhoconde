@@ -1,6 +1,14 @@
 /* ── SECTION MANIFESTO ───────────────────────── */
 .s-manifesto {
-  padding: 140px 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0 0 0;
+  margin-top: -160px;
+  background: linear-gradient(to bottom, var(--navy), var(--navy-dk));
+  position: relative;
+  z-index: 14;
 }
 
 .mf-c {
@@ -11,7 +19,7 @@
 
 .mf-c h2 {
   font-family: var(--H);
-  font-size: clamp(22px, 2.8vw, 34px);
+  font-size: clamp(24px, 2.8vw, 36px);
   color: var(--cream);
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -20,7 +28,7 @@
 }
 
 .mf-c p {
-  font-size: clamp(17px, 1.5vw, 20px);
+  font-size: clamp(19px, 1.5vw, 22px);
   line-height: 1.95;
   color: var(--text);
   font-weight: 300;

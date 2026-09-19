@@ -1,6 +1,14 @@
 /* ── SECTION O APELIDO ───────────────────────── */
 .s-apelido {
-  padding: 140px 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0 0 0;
+  margin-top: -160px;
+  background: linear-gradient(to bottom, var(--navy-dk), var(--navy));
+  position: relative;
+  z-index: 12;
 }
 
 .apelido-c {
@@ -10,7 +18,7 @@
 }
 
 .apelido-c p {
-  font-size: clamp(17px, 1.5vw, 20px);
+  font-size: clamp(19px, 1.5vw, 22px);
   line-height: 1.95;
   color: var(--text);
   font-weight: 300;

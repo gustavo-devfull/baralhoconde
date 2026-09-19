@@ -1,20 +1,44 @@
+import { useEffect } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { CardCarousel } from '@/components/CardCarousel'
+import card1 from '@/assets/cards/card1.jpg'
+import card2 from '@/assets/cards/card2.jpg'
+import card3 from '@/assets/cards/card3.jpg'
+import cardConde from '@/assets/cards/cardConde.jpg'
 import './AMesa.css'
 
+gsap.registerPlugin(ScrollTrigger)
+
+const CARDS = [card1, card2, card3, cardConde]
+
 export function AMesa() {
+  useEffect(() => {
+    const section = document.querySelector('.s-mesa')
+
+    gsap.fromTo(
+      section,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 100%',
+          end: 'top 30%',
+          scrub: 1,
+        },
+      }
+    )
+
+    return () => ScrollTrigger.getAll().forEach(t => t.kill())
+  }, [])
   return (
     <section className="s-mesa" id="a-mesa">
       <div className="wrap">
         <div className="mesa-grid">
           <div className="rv">
-            <div className="card-frame">
-              <div className="cf-corner tl">C<br />♣</div>
-              <div className="cf-corner br">C<br />♣</div>
-              <div className="cf-body">
-                <div className="cf-suit">♣</div>
-                <p className="cf-label">Solte aqui a ilustração<br />do Conde</p>
-              </div>
-              <div className="cf-foot"><span>O Conde</span></div>
-            </div>
+            <CardCarousel cards={CARDS} />
           </div>
           <div>
             <span className="tag rv">I · A Mesa</span>

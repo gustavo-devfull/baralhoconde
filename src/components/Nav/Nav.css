@@ -19,7 +19,8 @@ nav.s {
 
 .nb {
   font-family: var(--D);
-  font-size: 15px;
+  font-weight: 500;
+  font-size: 26px;
   color: var(--gold);
   letter-spacing: 4px;
 }
@@ -31,7 +32,7 @@ nav.s {
 
 .nl a {
   font-family: var(--H);
-  font-size: 10px;
+  font-size: 16px;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--dim);
@@ -45,7 +46,7 @@ nav.s {
 
 .nc {
   font-family: var(--H);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 3px;
   text-transform: uppercase;
   background: transparent;

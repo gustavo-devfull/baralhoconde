@@ -1,6 +1,31 @@
+import { useEffect } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './OApelido.css'
 
+gsap.registerPlugin(ScrollTrigger)
+
 export function OApelido() {
+  useEffect(() => {
+    const section = document.querySelector('.s-apelido')
+
+    gsap.fromTo(
+      section,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 100%',
+          end: 'top 30%',
+          scrub: 1,
+        },
+      }
+    )
+
+    return () => ScrollTrigger.getAll().forEach(t => t.kill())
+  }, [])
   return (
     <section className="s-apelido" id="o-apelido">
       <div className="apelido-c">

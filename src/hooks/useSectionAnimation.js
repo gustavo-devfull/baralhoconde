@@ -4,11 +4,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export function useScrollTrigger() {
+export function useSectionAnimation(sectionSelector) {
   useEffect(() => {
-    const elements = document.querySelectorAll('.rv')
+    const section = document.querySelector(sectionSelector)
+    if (!section) return
+
+    const elements = section.querySelectorAll('.rv')
 
     elements.forEach((el, index) => {
+      const delay = index * 0.15
+
       gsap.fromTo(
         el,
         { opacity: 0, y: 32 },
@@ -24,6 +29,7 @@ export function useScrollTrigger() {
             scrub: false,
             markers: false,
           },
+          delay: delay,
         }
       )
     })
@@ -31,5 +37,5 @@ export function useScrollTrigger() {
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill())
     }
-  }, [])
+  }, [sectionSelector])
 }
