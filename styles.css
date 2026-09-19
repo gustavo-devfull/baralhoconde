@@ -363,3 +363,83 @@ body { margin: 0; background: #fdfcf8; }
   *, *::before, *::after { box-sizing: border-box; }
   a { color: #b8873c; text-decoration: none; }
   a:hover { color: #d9a95c; }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .header-grid {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    gap: 15px !important;
+    padding: 20px !important;
+    text-align: center;
+    justify-items: center;
+  }
+  .header-nav {
+    flex-wrap: wrap !important;
+    gap: 15px !important;
+  }
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    padding: 60px 20px 40px !important;
+    text-align: center;
+  }
+  .hero-grid h1 {
+    font-size: clamp(40px, 10vw, 52px) !important;
+  }
+  .hero-grid a {
+    margin: 0 auto;
+  }
+  .features-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 30px 10px !important;
+    padding: 40px 20px !important;
+  }
+  .features-grid > div {
+    border-right: none !important;
+    padding: 0 5px !important;
+  }
+  .history-grid-outer {
+    grid-template-columns: 1fr !important;
+  }
+  .history-grid-inner {
+    grid-template-columns: 1fr !important;
+    padding: 40px 20px !important;
+    text-align: center;
+  }
+  .history-grid-inner img {
+    margin: 0 auto;
+    max-width: 80% !important;
+  }
+  .cards-grid {
+    grid-template-columns: 1fr !important;
+    padding: 50px 20px !important;
+    text-align: center;
+  }
+  .cards-grid > div:nth-child(2) {
+    min-height: 250px !important;
+  }
+  .cards-grid a {
+    margin: 0 auto;
+  }
+  .cards-grid > div:last-child {
+    align-items: center !important;
+  }
+  .four-images-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    padding: 40px 20px 20px !important;
+    text-align: center;
+    gap: 30px !important;
+  }
+  .footer-nav {
+    flex-wrap: wrap !important;
+    gap: 20px !important;
+  }
+  .footer-grid > div:last-child {
+    justify-content: center !important;
+    border-left: none !important;
+    padding-left: 0 !important;
+  }
+}
