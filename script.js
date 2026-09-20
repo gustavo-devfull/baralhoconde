@@ -46,6 +46,19 @@ function setupMotion() {
   
   const { animate, inView } = M;
 
+  // Animação das seções inteiras
+  document.querySelectorAll('section:not(:first-of-type), footer').forEach((sec) => {
+    sec.style.opacity = '0';
+    sec.style.transform = 'translateY(30px)';
+    sec.style.willChange = 'opacity, transform';
+    inView(sec, () => {
+      animate(sec, 
+        { opacity: [0, 1], transform: ['translateY(30px)', 'translateY(0px)'] },
+        { duration: 0.85, easing: [0.16, 1, 0.3, 1] }
+      );
+    }, { margin: '0px 0px -10% 0px' });
+  });
+
   const pool = Array.from(document.querySelectorAll(
     'section h1, section h2, section p, section img, section a[href], [data-reveal], footer nav, footer a'
   ));
