@@ -13,6 +13,21 @@ function closePopup() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Mobile Menu Toggle
+  const mobileMenuBtn = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+    });
+    // Close menu when a link is clicked
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+      });
+    });
+  }
+
   // Setup keyboard shortcut to close popup
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
